@@ -1,0 +1,94 @@
+{
+  "name": "rnkit-code-push-cli",
+  "description": "rnkit-code-push is command tools for react native",
+  "version": "1.0.4",
+  "preferGlobal": true,
+  "author": {
+    "name": "SimMan",
+    "email": "liwei0990@gmail.com"
+  },
+  "scripts": {
+    "compile": "babel --presets es2015-loose,stage-1 --plugins transform-runtime src/ --out-dir lib/",
+    "watch-compile": "npm run compile -- --watch",
+    "watch": "npm run watch-compile",
+    "prepublish": "npm run compile",
+    "eslint": "eslint src/",
+    "test": "npm run eslint && npm run test-cov",
+    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha -- -t 50000 --recursive  -R spec test/"
+  },
+  "bin": {
+    "rnkit-code-push": "./bin/index.js"
+  },
+  "contributors": [
+    {
+      "name": "SimMan",
+      "email": "liwei0990@gmail.com"
+    }
+  ],
+  "main": "lib/index.js",
+  "dependencies": {
+    "asciify": "^1.3.5",
+    "babel-runtime": "6.6.1",
+    "cli-table2": "^0.2.0",
+    "co": "4.6.0",
+    "colors": "1.1.2",
+    "commander": "2.9.0",
+    "fs-promise": "^0.5.0",
+    "inquirer": "^1.1.3",
+    "ipa-metadata": "^1.4.0",
+    "isomorphic-fetch": "^2.2.1",
+    "mkdir-recursive": "^0.2.2",
+    "moment": "^2.17.1",
+    "node-apk-parser": "^0.2.3",
+    "open": "0.0.5",
+    "progress": "^1.1.8",
+    "prompt": "^1.0.0",
+    "request": "^2.81.0",
+    "rimraf": "^2.6.1",
+    "validator": "^5.7.0",
+    "yauzl": "^2.6.0",
+    "yazl": "^2.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-eslint": "^6.1.2",
+    "babel-plugin-transform-runtime": "^6.12.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-es2015-loose": "^7.0.0",
+    "babel-preset-stage-1": "^6.13.0",
+    "eslint": "^3.18.0",
+    "eslint-config-standard": "^7.1.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1",
+    "istanbul": "0.4.0",
+    "mocha": "1.20.1",
+    "muk": "0.3.1"
+  },
+  "keywords": [
+    "update",
+    "push",
+    "rnkit",
+    "framework",
+    "es6",
+    "es7",
+    "async",
+    "await",
+    "yield",
+    "websocket",
+    "generator-function",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rnkit/rnkit-code-push-cli"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/rnkit/rnkit-code-push-cli/issues"
+  }
+}

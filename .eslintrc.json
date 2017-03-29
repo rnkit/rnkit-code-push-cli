@@ -1,0 +1,11 @@
+{
+    "extends": "standard",
+    "plugins": [
+        "standard",
+        "promise"
+    ],
+    "rules": {
+      "camelcase": 0,
+      "no-unused-expressions": 0
+    }
+}
