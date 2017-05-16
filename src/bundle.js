@@ -5,7 +5,8 @@ import inquirer from 'inquirer'
 import colors from 'colors'
 var child_process = require('child_process')
 import {
-  getRNVersion
+  getRNVersion,
+  getRNPackage
 } from './utils'
 import * as fs from 'fs'
 import { ZipFile } from 'yazl'
@@ -75,8 +76,6 @@ async function pack (dir, output) {
 }
 
 export async function bundleApp (options) {
-  const beginTime = Date.now()
-  console.log(beginTime)
   const platform = checkPlatform(options.platform)
 
   let {
@@ -103,6 +102,13 @@ export async function bundleApp (options) {
   const realOutput = output
 
   const { version } = getRNVersion()
+
+  const rnpkgInfo = getRNPackage()
+  const pkgrnVersion = rnpkgInfo['dependencies']['react-native']
+
+  if (version !== pkgrnVersion) {
+    throw new Error(`node_modules/react-native/package.json version: ${version}\nis not eq\npackage rn version: ${pkgrnVersion}`)
+  }
 
   console.log(colors.green('Bundling with React Native version: ', version))
   await rmdir(realIntermedia)

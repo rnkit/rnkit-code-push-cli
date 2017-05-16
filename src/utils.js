@@ -39,6 +39,11 @@ export function getRNVersion () {
   }
 }
 
+export function getRNPackage () {
+  const pkg = JSON.parse(fs.readFileSync(path.resolve('package.json')))
+  return pkg
+}
+
 export function getApkVersion (fn) {
   const reader = ApkReader.readFile(fn)
   const manifest = reader.readManifestSync()

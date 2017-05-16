@@ -1,7 +1,7 @@
 {
   "name": "rnkit-code-push-cli",
   "description": "rnkit-code-push is command tools for react native",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "preferGlobal": true,
   "author": {
     "name": "SimMan",
