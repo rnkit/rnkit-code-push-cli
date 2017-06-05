@@ -64,7 +64,7 @@ export async function uploadApk (filePath) {
 }
 
 export async function deployment (platform) {
-  const { appKey } = await getSelectedApp('ios')
+  const { appKey } = await getSelectedApp(platform)
 
   const { data } = await get(`/version/list?app_key=${appKey}`)
   const version_result = await inquire.list('rawlist', 'Please Choose Version :', data.map(obj => obj.name))
