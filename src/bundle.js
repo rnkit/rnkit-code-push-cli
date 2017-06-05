@@ -107,7 +107,7 @@ export async function bundleApp (options) {
   const pkgrnVersion = rnpkgInfo['dependencies']['react-native']
 
   if (version !== pkgrnVersion) {
-    throw new Error(`node_modules/react-native/package.json version: ${version}\nis not eq\npackage rn version: ${pkgrnVersion}`)
+    console.log(colors.red(`node_modules/react-native/package.json version: ${version}\nis not eq\npackage rn version: ${pkgrnVersion}`))
   }
 
   console.log(colors.green('Bundling with React Native version: ', version))
