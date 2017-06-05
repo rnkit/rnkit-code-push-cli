@@ -15,7 +15,7 @@ async function list (type, message, rawData) {
     const indexs = []
     for (const val of value) {
       indexs.push(
-        value.indexOf(val),
+        rawData.indexOf(val),
       )
     }
     return {

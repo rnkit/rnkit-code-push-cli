@@ -19,9 +19,9 @@ export async function choosePackage (appId) {
   const packages = list.map((pack, index) => `AppVerion: ${colors.blue(pack.app_version)} > PackageName: ${colors.blue(pack.name)}`)
   const bind_packages_result = await inquire.list('checkbox', 'Please Choose Bind Packages :', packages)
   const package_keys = []
-  for (const index in bind_packages_result.index) {
+  bind_packages_result.index.forEach((index) => {
     package_keys.push(list[index].key)
-  }
+  })
   return package_keys.join(',')
 }
 
