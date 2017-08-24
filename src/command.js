@@ -168,7 +168,8 @@ const cmd = () => {
   program
     .command('bindApp <platform>')
     .description('The binding is applied to the current project with platform')
-    .action(async(platform) => {
+    .option('-k, --app_key_path <app_key_path>', 'the json file path of app_key')
+    .action(async(platform, options) => {
       try {
         const result = checkPlatform(platform)
         const data = await listApp(result === 'ios' ? 1 : 2)
@@ -190,7 +191,7 @@ const cmd = () => {
         } ]).then(async(answers) => {
           try {
             const obj = data.find(v => v.name === answers.app)
-            await selectApp(obj.name, obj.key, platform)
+            await selectApp(obj.name, obj.key, platform, options.app_key_path)
             console.log(`You choose: ${obj.name}`)
           } catch (error) {
             console.log(colors.red(error.message))
@@ -205,9 +206,10 @@ const cmd = () => {
   program
     .command('uploadIpa <ipaFilePath>')
     .description('upload ios ipa file to rnkit code push server')
-    .action(async(ipaFilePath) => {
+    .option('-k, --app_key_path <app_key_path>', 'the json file path of app_key')
+    .action(async(ipaFilePath, options) => {
       try {
-        await uploadIpa(ipaFilePath)
+        await uploadIpa(ipaFilePath, options.app_key_path)
       } catch (error) {
         console.log(colors.red(error.message))
       }
@@ -216,9 +218,10 @@ const cmd = () => {
   program
     .command('uploadApk <apkFilePath>')
     .description('upload android apk file to rnkit code push server')
-    .action(async(apkFilePath) => {
+    .option('-k, --app_key_path <app_key_path>', 'the json file path of app_key')
+    .action(async (apkFilePath, options) => {
       try {
-        await uploadApk(apkFilePath)
+        await uploadApk(apkFilePath, options.app_key_path)
       } catch (error) {
         console.log(colors.red(error.message))
       }
@@ -227,10 +230,11 @@ const cmd = () => {
   program
     .command('packages <platform>')
     .description('View the packages for a running app')
-    .action(async(platform) => {
+    .option('-k, --app_key_path <app_key_path>', 'the json file path of app_key')
+    .action(async(platform, options) => {
       try {
         await checkPlatform(platform)
-        const app_info = await getSelectedApp(platform)
+        const app_info = await getSelectedApp(platform, options.app_key_path)
         const data = await listPackage(app_info.appKey)
         const table = new Table({
           head: ['name', 'app_version', 'platform', 'key', 'bind_version', 'created_at']
@@ -252,10 +256,11 @@ const cmd = () => {
   program
     .command('versions <platform>')
     .description('View the versions for a running app')
-    .action(async(platform) => {
+    .option('-k, --app_key_path <app_key_path>', 'the json file path of app_key')
+    .action(async(platform, options) => {
       try {
         await checkPlatform(platform)
-        const app_info = await getSelectedApp(platform)
+        const app_info = await getSelectedApp(platform, options.app_key_path)
         await listVersions(app_info.appKey)
       } catch (error) {
         console.log(colors.red(error.message))
@@ -267,6 +272,7 @@ const cmd = () => {
     .description('publish version to rnkit-code-push')
     .option('-p --platform <platform>', 'platform ios|android')
     .option('-f --ppkFile <ppkFile>', 'ppkFile Path')
+    .option('-k, --app_key_path <app_key_path>', 'the json file path of app_key')
     .on('--help', () => {
       console.log(colors.bold('  Examples:'))
       console.log('')
@@ -285,9 +291,10 @@ const cmd = () => {
     .command('deployment')
     .description('deployment version to packages')
     .option('-p --platform <platform>', 'platform ios|android')
+    .option('-k, --app_key_path <app_key_path>', 'the json file path of app_key')
     .action(async(args) => {
       try {
-        await deployment(args.platform)
+        await deployment(args.platform, args.app_key_path)
       } catch (error) {
         console.log(colors.red(error.message))
       }
@@ -302,6 +309,7 @@ const cmd = () => {
     .option('--output <output>', 'File name where to store the resulting bundle, ex. /tmp/groups.bundle')
     .option('--intermediaDir <intermediaDir>', 'tmp file out dir')
     .option('--verbose <verbose>', 'Enables logging')
+    .option('-k, --app_key_path <app_key_path>', 'the json file path of app_key')
     .action(async(args) => {
       try {
         await bundleApp(args)

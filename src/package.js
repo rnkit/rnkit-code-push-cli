@@ -25,12 +25,12 @@ export async function choosePackage (appId) {
   return package_keys.join(',')
 }
 
-export async function uploadIpa (filePath) {
+export async function uploadIpa(filePath, app_key_path) {
   if (!filePath) {
     throw new Error('Usage: rnkit-code-push uploadIpa <ipaFile>')
   }
   const app_version = await getIPAVersion(filePath)
-  const { appKey } = await getSelectedApp('ios')
+  const { appKey } = await getSelectedApp('ios', app_key_path)
 
   const { hash, name } = await uploadFile(filePath)
 
@@ -44,12 +44,12 @@ export async function uploadIpa (filePath) {
   console.log('Ipa uploaded')
 }
 
-export async function uploadApk (filePath) {
+export async function uploadApk(filePath, app_key_path) {
   if (!filePath) {
-    throw new Error('Usage: rnkit-code-push uploadIpa <ipaFile>')
+    throw new Error('Usage: rnkit-code-push uploadApk <ipaFile>')
   }
   const app_version = await getApkVersion(filePath)
-  const { appKey } = await getSelectedApp('android')
+  const { appKey } = await getSelectedApp('android', app_key_path)
 
   const { hash, name } = await uploadFile(filePath)
 
@@ -63,8 +63,8 @@ export async function uploadApk (filePath) {
   console.log('Ipa uploaded')
 }
 
-export async function deployment (platform) {
-  const { appKey } = await getSelectedApp(platform)
+export async function deployment(platform, app_key_path) {
+  const { appKey } = await getSelectedApp(platform, app_key_path)
 
   const { data } = await get(`/version/list?app_key=${appKey}`)
   const version_result = await inquire.list('rawlist', 'Please Choose Version :', data.map(obj => obj.name))

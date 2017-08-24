@@ -20,13 +20,15 @@ export function checkPlatform (platform) {
   return platform
 }
 
-export async function getSelectedApp (platform) {
+export async function getSelectedApp(platform, app_key_path) {
   checkPlatform(platform)
 
-  if (!await fs.exists('rnkit-code-push.json')) {
+  if (!app_key_path) app_key_path = 'rnkit-code-push.json';
+
+  if (!await fs.exists(app_key_path)) {
     throw new Error(`App not selected. run 'rnkit-code-push bindApp ${platform}' first!`)
   }
-  const updateInfo = JSON.parse(await fs.readFile('rnkit-code-push.json', 'utf8'))
+  const updateInfo = JSON.parse(await fs.readFile(app_key_path, 'utf8'))
 
   if (!updateInfo[platform]) {
     throw new Error(`App not selected. run 'rnkit-code-push bindApp ${platform}' first!`)
@@ -51,13 +53,14 @@ export async function chooseApp (platform) {
   }
 }
 
-export async function selectApp (appName, appKey, platform) {
+export async function selectApp(appName, appKey, platform, app_key_path) {
   let updateInfo = {}
-  if (await fs.exists('rnkit-code-push.json')) {
+  if (!app_key_path) app_key_path = 'rnkit-code-push.json';
+  if (await fs.exists(app_key_path)) {
     try {
-      updateInfo = JSON.parse(await fs.readFile('rnkit-code-push.json', 'utf8'))
+      updateInfo = JSON.parse(await fs.readFile(app_key_path, 'utf8'))
     } catch (e) {
-      console.error('Failed to parse file `rnkit-code-push.json`. Try to remove it manually.')
+      console.error('Failed to parse file `' + app_key_path + '`. Try to remove it manually.')
       throw e
     }
   }
@@ -65,5 +68,5 @@ export async function selectApp (appName, appKey, platform) {
     appName,
     appKey
   }
-  await fs.writeFile('rnkit-code-push.json', JSON.stringify(updateInfo, null, 4), 'utf8')
+  await fs.writeFile(app_key_path, JSON.stringify(updateInfo, null, 4), 'utf8')
 }
