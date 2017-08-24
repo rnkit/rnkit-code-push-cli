@@ -163,6 +163,6 @@ export async function bundleApp (options) {
 
   if (isPublish) {
     console.log(colors.green('Publish'))
-    await publish({ platform, ppkFile: realOutput })
+    await publish({ platform, ppkFile: realOutput, app_key_path: options.app_key_path })
   }
 }

@@ -166,7 +166,7 @@ async function getVersionOptions () {
 }
 
 export async function publish (args) {
-  const { platform, ppkFile } = args
+  const { platform, ppkFile, app_key_path } = args
   await checkPlatform(platform)
 
   if (!ppkFile) {
@@ -176,7 +176,7 @@ export async function publish (args) {
 
   const options = await getVersionOptions()
 
-  const app_info = await getSelectedApp(platform)
+  const app_info = await getSelectedApp(platform, app_key_path)
 
   const { hash, name } = await uploadFile(ppkFile)
 
