@@ -82,10 +82,18 @@ export async function bundleApp (options) {
     dev, entryFile, output, intermediaDir
   } = options
 
-  if (platform === 'ios' && !entryFile) {
-    entryFile = 'index.ios.js'
-  } else if (platform === 'android' && !entryFile) {
-    entryFile = 'index.android.js'
+  const { version, major, minor } = getRNVersion();
+
+  if (!entryFile) {
+    if (minor >= 49) {
+      entryFile = 'index.js'
+    } else if (minor < 49) {
+      if (platform === 'ios') {
+        entryFile = 'index.ios.js'
+      } else if (platform === 'android') {
+        entryFile = 'index.android.js'
+      }
+    }
   }
 
   if (!intermediaDir) {
@@ -100,8 +108,6 @@ export async function bundleApp (options) {
   const realIntermedia = path.resolve(intermediaDir)
 
   const realOutput = output
-
-  const { version } = getRNVersion()
 
   const rnpkgInfo = getRNPackage()
   const pkgrnVersion = rnpkgInfo['dependencies']['react-native']
