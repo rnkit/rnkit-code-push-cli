@@ -1,4 +1,4 @@
-import Table from 'cli-table2'
+import Table from 'cli-table3'
 import colors from 'colors'
 import moment from 'moment'
 import validator from 'validator'

@@ -7,7 +7,7 @@ const {
 } = require('./api')
 const crypto = require('crypto')
 import colors from 'colors'
-import Table from 'cli-table2'
+import Table from 'cli-table3'
 
 function md5 (str) {
   return crypto.createHash('md5').update(str).digest('hex')
